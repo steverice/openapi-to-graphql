@@ -664,8 +664,7 @@ function createFields<TSource, TContext, TArgs extends object>({
       fetch
     })
 
-    const requiredProperty =
-      typeof def.required === 'object' && def.required.includes(fieldName)
+    const nullableProperty = typeof def.schema.nullable
 
     // Finally, add the object type to the fields (using sanitized field name)
     if (objectType) {
@@ -706,9 +705,9 @@ function createFields<TSource, TContext, TArgs extends object>({
       )
 
       fields[sanePropName] = {
-        type: requiredProperty
-          ? new GraphQLNonNull(objectType as GraphQLOutputType)
-          : (objectType as GraphQLOutputType),
+        type: nullableProperty
+          ? (objectType as GraphQLOutputType)
+          : new GraphQLNonNull(objectType as GraphQLOutputType),
 
         description:
           typeof fieldSchema === 'object' ? fieldSchema.description : null

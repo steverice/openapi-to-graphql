@@ -695,7 +695,6 @@ export function createDataDef<TSource, TContext, TArgs>(
     return {
       preferredName,
       schema: null,
-      required: [],
       links: null,
       subDefinitions: null,
       graphQLTypeName: null,
@@ -793,7 +792,6 @@ export function createDataDef<TSource, TContext, TArgs>(
      * currently, it does not.
      */
     schema,
-    required: [],
     targetGraphQLType, // May change due to allOf and oneOf resolution
     subDefinitions: undefined,
     links: saneLinks,
@@ -825,7 +823,6 @@ export function createDataDef<TSource, TContext, TArgs>(
         addObjectPropertiesToDataDef(
           def,
           collapsedSchema,
-          def.required,
           isInputObjectType,
           data,
           oas
@@ -1223,22 +1220,10 @@ function collapseLinksIntoDataDefinition<TSource, TContext, TArgs>({
 function addObjectPropertiesToDataDef<TSource, TContext, TArgs>(
   def: DataDefinition,
   schema: SchemaObject,
-  required: string[],
   isInputObjectType: boolean,
   data: PreprocessingData<TSource, TContext, TArgs>,
   oas: Oas3
 ) {
-  /**
-   * Resolve all required properties
-   *
-   * TODO: required may contain duplicates, which is not necessarily a problem
-   */
-  if (Array.isArray(schema.required)) {
-    schema.required.forEach((requiredProperty) => {
-      required.push(requiredProperty)
-    })
-  }
-
   for (let propertyKey in schema.properties) {
     if (!(propertyKey in def.subDefinitions)) {
       let propSchemaName = propertyKey
@@ -1333,11 +1318,6 @@ function getMemberSchemaData<TSource, TContext, TArgs>(
     // Consolidate properties
     if (schema.properties) {
       result.allProperties.push(schema.properties)
-    }
-
-    // Consolidate required
-    if (schema.required) {
-      result.allRequired = result.allRequired.concat(schema.required)
     }
   })
 
@@ -1478,7 +1458,6 @@ function createAnyOfObject<TSource, TContext, TArgs>(
     addObjectPropertiesToDataDef(
       def,
       collapsedSchema,
-      def.required,
       isInputObjectType,
       data,
       oas
