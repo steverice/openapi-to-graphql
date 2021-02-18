@@ -664,7 +664,7 @@ function createFields<TSource, TContext, TArgs extends object>({
       fetch
     })
 
-    const nullableProperty = def.schema.nullable
+    const nullableProperty = fieldTypeDefinition.schema.nullable
 
     // Finally, add the object type to the fields (using sanitized field name)
     if (objectType) {
