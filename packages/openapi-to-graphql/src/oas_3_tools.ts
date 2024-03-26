@@ -376,19 +376,6 @@ export function resolveAllOf<TSource, TContext, TArgs>(
           collapsedSchema.anyOf.push(anyOfProperty)
         })
       }
-
-      // Collapse required if applicable
-      if ('required' in collapsedMemberSchema) {
-        if (!('required' in collapsedSchema)) {
-          collapsedSchema.required = []
-        }
-
-        collapsedMemberSchema.required.forEach((requiredProperty) => {
-          if (!collapsedSchema.required.includes(requiredProperty)) {
-            collapsedSchema.required.push(requiredProperty)
-          }
-        })
-      }
     })
   }
 
