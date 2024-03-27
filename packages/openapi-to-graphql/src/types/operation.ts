@@ -68,6 +68,13 @@ export type DataDefinition = {
    */
   required: string[]
 
+  /**
+   * Similar to the nullable property in object schemas but because of certain
+   * keywords to combine schemas, e.g. "allOf", this resolves the nullable
+   * property in all member schemas
+   */
+  nullable?: boolean
+
   // The type GraphQL type this dataDefintion will be created into
   targetGraphQLType: TargetGraphQLType
 

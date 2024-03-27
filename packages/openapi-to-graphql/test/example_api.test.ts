@@ -642,8 +642,8 @@ test('Get response containing 64-bit integer (using GraphQLBigInt)', () => {
     expect(result).toEqual({
       data: {
         productReviews: [
-          { timestamp: BigInt('1502787600000000') },
-          { timestamp: BigInt('1502787400000000') }
+          { timestamp: Number('1502787600000000') },
+          { timestamp: Number('1502787400000000') }
         ]
       }
     })

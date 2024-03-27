@@ -1316,13 +1316,14 @@
       },
       "coordinates": {
         "type": "object",
-        "required": ["lat", "long"],
         "properties": {
           "lat": {
-            "type": "number"
+            "type": "number",
+            "nullable": false
           },
           "long": {
-            "type": "number"
+            "type": "number",
+            "nullable": false
           }
         }
       },
@@ -1332,10 +1333,16 @@
           {
             "properties": {
               "family": {
-                "$ref": "#/components/schemas/familyString"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/familyString"
+                  },
+                  {
+                    "nullable": false
+                  }
+                ]
               }
-            },
-            "required": ["family"]
+            }
           },
           {
             "properties": {
@@ -1388,7 +1395,8 @@
           "patent-id": {
             "type": "string",
             "description": "The id of the patent",
-            "format": "specialIdFormat"
+            "format": "specialIdFormat",
+            "nullable": false
           },
           "inventor-id": {
             "type": "string",

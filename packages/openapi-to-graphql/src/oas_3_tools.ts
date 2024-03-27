@@ -389,6 +389,25 @@ export function resolveAllOf<TSource, TContext, TArgs>(
           }
         })
       }
+
+      // Collapse nullable if applicable
+      if (typeof collapsedMemberSchema.nullable !== 'undefined') {
+        if (typeof collapsedSchema.nullable === 'undefined') {
+          collapsedSchema.nullable = collapsedMemberSchema.nullable
+
+          // Check for incompatible nullable property
+        } else if (collapsedSchema.nullable !== collapsedMemberSchema.nullable) {
+          handleWarning({
+            mitigationType: MitigationTypes.UNRESOLVABLE_SCHEMA,
+            message:
+              `Resolving 'allOf' field in schema '${JSON.stringify(
+                collapsedSchema
+              )}' ` + `results in incompatible nullable property.`,
+            data,
+            log: preprocessingLog
+          })
+        }
+      }
     })
   }
 

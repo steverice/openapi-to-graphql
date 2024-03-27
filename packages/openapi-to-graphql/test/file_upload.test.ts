@@ -119,6 +119,9 @@ test('Upload completes without any error', async () => {
   const graphqlServer = createServer(async (req, res) => {
     try {
       const operation = await processRequest(req, res)
+      if (Array.isArray(operation)) {
+        throw new Error('Expected a single operation')
+      }
       const result = await graphql({ schema: createdSchema, source: operation.query, variableValues: operation.variables as GraphQLArgs['variableValues'] })
       res.end(JSON.stringify(result))
     } catch (e) {

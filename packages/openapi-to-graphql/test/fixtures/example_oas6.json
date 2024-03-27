@@ -436,7 +436,7 @@
             "type": "number"
           },
           "previous_owner": {
-            "description": "Previouw owner of the pet",
+            "description": "Previous owner of the pet",
             "type": "string"
           },
           "history": {
@@ -446,7 +446,8 @@
               "data": {
                 "type": "string"
               }
-            }
+            },
+            "nullable": false
           },
           "history2": {
             "description": "History of the pet",
