@@ -696,6 +696,7 @@ export function createDataDef<TSource, TContext, TArgs>(
       preferredName,
       schema: null,
       required: [],
+      nullable: null,
       links: null,
       subDefinitions: null,
       graphQLTypeName: null,
@@ -794,6 +795,7 @@ export function createDataDef<TSource, TContext, TArgs>(
      */
     schema,
     required: [],
+    nullable: collapsedSchema.nullable,
     targetGraphQLType, // May change due to allOf and oneOf resolution
     subDefinitions: undefined,
     links: saneLinks,

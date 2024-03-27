@@ -1316,13 +1316,14 @@
       },
       "coordinates": {
         "type": "object",
-        "required": ["lat", "long"],
         "properties": {
           "lat": {
-            "type": "number"
+            "type": "number",
+            "nullable": false
           },
           "long": {
-            "type": "number"
+            "type": "number",
+            "nullable": false
           }
         }
       },
@@ -1332,10 +1333,16 @@
           {
             "properties": {
               "family": {
-                "$ref": "#/components/schemas/familyString"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/familyString"
+                  },
+                  {
+                    "nullable": false
+                  }
+                ]
               }
-            },
-            "required": ["family"]
+            }
           },
           {
             "properties": {
@@ -1388,7 +1395,8 @@
           "patent-id": {
             "type": "string",
             "description": "The id of the patent",
-            "format": "specialIdFormat"
+            "format": "specialIdFormat",
+            "nullable": false
           },
           "inventor-id": {
             "type": "string",
@@ -1600,13 +1608,13 @@
       "EverythingLink": {
         "operationId": "getCopier",
         "parameters": {
-          "query": "{$url}_{$method}_{$statusCode}_{$request.query.query}_{$request.header.accept}_{$response.header.connection}"
+          "query": "{$url}_{$method}_{$statusCode}_{$request.query.query}_{$request.header.accept}_{$response.header.content-length}"
         }
       },
       "EverythingLink2": {
         "operationId": "getCopier",
         "parameters": {
-          "query": "{$url}_{$method}_{$statusCode}_{$request.body}_{$request.query.query}_{$request.path.path}_{$request.header.accept}_{$response.body#/body}_{$response.query.query}_{$response.path.path}_{$response.header.connection}"
+          "query": "{$url}_{$method}_{$statusCode}_{$request.body}_{$request.query.query}_{$request.path.path}_{$request.header.accept}_{$response.body#/body}_{$response.query.query}_{$response.path.path}_{$response.header.content-length}"
         }
       },
       "Reviews": {

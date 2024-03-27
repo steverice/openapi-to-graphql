@@ -662,10 +662,34 @@ function createFields<TSource, TContext, TArgs extends object>({
       iteration: iteration + 1,
       isInputObjectType,
       fetch
-    })
+    }) as GraphQLObjectType | GraphQLInputObjectType
 
-    const requiredProperty =
-      typeof def.required === 'object' && def.required.includes(fieldName)
+
+    /* On requiredness / nullability
+
+      In GraphQL, fields are either wrapped in a `GraphQLNonNull` (type ends with `!`) or not.
+      In input types, a field with `GraphQLNonNull` type [must be present and must not be `null`](https://spec.graphql.org/October2021/#sec-Non-Null.Input-Coercion)
+      In output types, a field with `GraphQLNonNull` type [cannot return a `null` value](https://spec.graphql.org/October2021/#sec-Value-Completion)
+
+      The OpenAPI spec is [not clear on the meaning of "required"](https://swagger.io/docs/specification/data-models/data-types/#required)
+      but the JSON schema specification that OpenAPI 3.0 uses [is clearer](https://json-schema.org/specification-links#draft-5)
+        > An object instance is valid against this keyword if its property set contains all elements in this keyword's array value.
+      Essentially, we can interpret "required" as "must be present in the object."
+
+      The OpenAPI spec also [provides a "nullable" property](https://swagger.io/docs/specification/data-models/data-types/#null)
+        > [nullable: true will] specify that the value may be null
+      Essentially, we can interpret "nullable" as "may be `null` (if present)."
+
+      In OpenAPI, the same component schema can be used as both input and output types. So we must interpret "required" and "nullable" differently.
+      For input types, we must interpret "required" as `GraphQLNonNull` and ignore "nullable" (since `GraphQLNonNull` implies non-nullable).
+      For output types, we must interpret "nullable" as `GraphQLNonNull` and ignore "required" (since presence in output is determined by the query).
+    */
+
+    // If the data is not present, assume nullable (GraphQL fields are null by default)
+
+    const nonNullProperty = isInputObjectType ?
+      def.schema.required?.includes(fieldName) :
+      fieldTypeDefinition.nullable === false
 
     // Finally, add the object type to the fields (using sanitized field name)
     if (objectType) {
@@ -706,7 +730,7 @@ function createFields<TSource, TContext, TArgs extends object>({
       )
 
       fields[sanePropName] = {
-        type: requiredProperty
+        type: nonNullProperty
           ? new GraphQLNonNull(objectType as GraphQLOutputType)
           : (objectType as GraphQLOutputType),
 
