@@ -1608,13 +1608,13 @@
       "EverythingLink": {
         "operationId": "getCopier",
         "parameters": {
-          "query": "{$url}_{$method}_{$statusCode}_{$request.query.query}_{$request.header.accept}_{$response.header.connection}"
+          "query": "{$url}_{$method}_{$statusCode}_{$request.query.query}_{$request.header.accept}_{$response.header.content-length}"
         }
       },
       "EverythingLink2": {
         "operationId": "getCopier",
         "parameters": {
-          "query": "{$url}_{$method}_{$statusCode}_{$request.body}_{$request.query.query}_{$request.path.path}_{$request.header.accept}_{$response.body#/body}_{$response.query.query}_{$response.path.path}_{$response.header.connection}"
+          "query": "{$url}_{$method}_{$statusCode}_{$request.body}_{$request.query.query}_{$request.path.path}_{$request.header.accept}_{$response.body#/body}_{$response.query.query}_{$response.path.path}_{$response.header.content-length}"
         }
       },
       "Reviews": {

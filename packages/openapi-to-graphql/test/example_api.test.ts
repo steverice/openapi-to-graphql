@@ -431,7 +431,7 @@ test('Link parameters as constants and variables', () => {
           },
           everythingLink: {
             body:
-              'http://localhost:3002/api/scanner_get_200_hello_application/json_close'
+              'http://localhost:3002/api/scanner_get_200_hello_application/json_16'
           }
         }
       }
@@ -493,10 +493,10 @@ test('Nested links with constants and variables', () => {
               body: '123',
               everythingLink: {
                 body:
-                  'http://localhost:3002/api/copier_get_200_123_application/json_close',
+                  'http://localhost:3002/api/copier_get_200_123_application/json_14',
                 everythingLink: {
                   body:
-                    'http://localhost:3002/api/copier_get_200_http://localhost:3002/api/copier_get_200_123_application/json_close_application/json_close'
+                    'http://localhost:3002/api/copier_get_200_http://localhost:3002/api/copier_get_200_123_application/json_14_application/json_75'
                 }
               }
             }
@@ -506,7 +506,7 @@ test('Nested links with constants and variables', () => {
           },
           everythingLink: {
             body:
-              'http://localhost:3002/api/scanner_get_200_val_application/json_close'
+              'http://localhost:3002/api/scanner_get_200_val_application/json_14'
           }
         }
       }
@@ -531,7 +531,7 @@ test('Link parameters as constants and variables with request payload', () => {
           body: 'req.body: body, req.query.query: query, req.path.path: path',
           everythingLink2: {
             body:
-              'http://localhost:3002/api/scanner/path_post_200_body_query_path_application/json_req.body: body, req.query.query: query, req.path.path: path_query_path_close'
+              'http://localhost:3002/api/scanner/path_post_200_body_query_path_application/json_req.body: body, req.query.query: query, req.path.path: path_query_path_70'
           }
         }
       }
